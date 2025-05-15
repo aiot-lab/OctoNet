@@ -147,7 +147,8 @@ for batch in dataloader:
     visualize_mocap_and_rgb_mosaic_batch_downsample_mocap(
         batch,
         output_dir='mocap_rgb_mosaic_videos',
-        fps_out=10)
+        fps_out=10
+    )
     visualize_tof_and_rgb_mosaic_batch_downsample_tof(
         batch,
         output_dir='tof_rgb_mosaic_videos',
@@ -156,7 +157,8 @@ for batch in dataloader:
     visualize_fmcw_and_rgb_mosaic_batch_raw_fixed_axes(
         batch,
         output_dir='fmcw_rgb_mosaic',
-        fps_out=8.81)
+        fps_out=8.81
+    )
     visualize_vayyar_txrx_only_and_camera(
         batch,
         output_dir="vayyar_rgb_mosaic",
@@ -170,7 +172,8 @@ for batch in dataloader:
     visualize_polar_and_camera_batch(
         batch,
         output_dir="polar_hr_plus_rgb",
-        fps_out=10.0
+        fps_out=10.0,
+        y_domain=None
     )
     visualize_imu_four_rows_no_zscore(
         batch,
