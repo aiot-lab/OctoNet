@@ -1,0 +1,15 @@
+logs/
+runs/
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.local
+weights/
+archieved/
+viz_output/
+__pycache__/
+
+# first commit, ignore all the files in the Configurations and Models folders
+Configurations/
+Models/

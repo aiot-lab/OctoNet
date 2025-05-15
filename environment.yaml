@@ -1,0 +1,24 @@
+name: octonet
+channels:
+  - defaults
+dependencies:
+  - python==3.9.18
+  - matplotlib
+  - numpy
+  - openpyxl
+  - pandas
+  - seaborn
+  - ruptures
+  - scikit-image
+  - scipy
+  - tqdm
+  - pytorch
+  - pytorch-cuda=12.4
+  - torchvision
+  - opencv
+  - imageio
+  - cmake
+  - ninja
+  - torchaudio
+  - ipykernel
+  - einops
