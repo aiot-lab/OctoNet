@@ -22,8 +22,91 @@
         <script src="https://unpkg.com/@glidejs/glide"></script>
         <style type="text/css">
             body{
-              min-width:600px;
-              max-width:100%;
+              min-width: 320px;  /* Reduced minimum width for better mobile support */
+              max-width: 100%;
+              padding: 0 15px;   /* Add padding for mobile */
+              box-sizing: border-box;
+            }
+            
+            /* Improved mobile navigation */
+            .topnav {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                padding: 10px 0;
+            }
+            
+            .topnav a {
+                padding: 8px 12px;
+                font-size: 16px;
+            }
+            
+            /* Responsive text sizing */
+            .project-title {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                line-height: 1.3;
+                margin: 20px 0;
+            }
+            
+            .authors a {
+                font-size: clamp(14px, 3vw, 16px);
+                margin: 5px;
+                display: inline-block;
+            }
+            
+            /* Improved video container responsiveness */
+            .video-row {
+                gap: 10px;
+                padding: 20px 0;
+            }
+            
+            .video-container {
+                width: 280px;  /* Smaller base width for mobile */
+                margin: 0 5px;
+            }
+            
+            /* Prevent video scaling on mobile to avoid layout issues */
+            @media (max-width: 768px) {
+                .video-container:hover {
+                    transform: none;
+                }
+                
+                .side-text, .side-image {
+                    width: 100%;
+                    display: block;
+                    margin: 10px 0;
+                }
+                
+                .content img {
+                    width: 100%;
+                    height: auto;
+                }
+                
+                .project-icons a {
+                    padding: 10px;
+                    margin: 5px;
+                }
+                
+                .caption {
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+            }
+            
+            /* Improved image responsiveness */
+            .teaser-image img {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* Better spacing for content */
+            .content {
+                margin: 20px 0;
+            }
+            
+            .section-title {
+                margin: 30px 0 15px;
+                font-size: clamp(1.2rem, 3vw, 2rem);
             }
             .side-text {
                 width:60%;
@@ -242,6 +325,9 @@
             </div>
         </div>
         <div class="section-title"> </div>
+        <div style="text-align: center; margin: 20px 0;">
+            <img src="static/logo/logo.png" alt="The University of Hong Kong Logo" style="max-width: 300px; height: auto;">
+        </div>
         <p align="center">Thanks to <a href="https://paschalidoud.github.io/">Despoina Paschalidou</a> for the website template.</p>
     </body>
 <script>
