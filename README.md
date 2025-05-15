@@ -11,7 +11,7 @@
   </a>
 </div>
 
-This toolbox contains the visualization code for the OctoNet network. It helps you to quickly select and visualize OctoNet.
+This toolbox contains visualization code for selecting and visualizing the OctoNet dataset.
 
 > **Note:** It is recommended to run the code in Python Jupyter Notebook `demo.ipynb`.
 
