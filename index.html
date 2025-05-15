@@ -1,0 +1,306 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <title>OctoNet</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="OctoNet is a comprehensive multi-modality dataset designed to bridge the interpretability gap between multiple sensing modalities and human physical activities."/>
+        <meta property="og:title" content="OctoNet"/>
+        <meta property="og:description" content="OctoNet is a comprehensive multi-modality dataset designed to bridge the interpretability gap between multiple sensing modalities and human physical activities."/>
+        <meta property="og:url" content="https://aiot-lab.github.io/OctoNet/"/>
+        <meta name="keywords" content="OctoNet, human activity understanding, multi-modal learning">
+
+        <link rel="stylesheet" type="text/css" href="style_project_page.css?cache=7754391418498779889">
+        <link href="https://fonts.googleapis.com/css?family=Arvo|Roboto&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide/dist/css/glide.core.min.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://unpkg.com/@glidejs/glide"></script>
+        <style type="text/css">
+            body{
+              min-width:600px;
+              max-width:100%;
+            }
+            .side-text {
+                width:60%;
+                display:inline-block;
+                vertical-align:top;
+            }
+            .side-image {
+                width: 38%;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .controls {
+                margin-bottom: 10px;
+            }
+            .left-controls {
+                display: inline-block;
+                vertical-align: top;
+                width: 80%;
+            }
+            .right-controls {
+                display: inline-block;
+                vertical-align: top;
+                width: 19%;
+                text-align: right;
+            }
+            .render_window {
+                display: inline-block;
+                vertical-align: middle;
+                box-shadow: 1px 0px 5px black;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                width: calc(33% - 10px);
+            }
+            .progress {
+                background: #666;
+                position: relative;
+                height: 5px;
+                margin-bottom: -5px;
+                display: none;
+            }
+            .glide__slide:hover {cursor: grab;}
+            .glide__slide:active {cursor: grabbing;}
+            .glide__slide img {width: 90%;}
+            .glide__bullets {
+                text-align: center;
+            }
+            .glide__bullet--active {
+                color: #aaa; 
+            }
+            /* Video row styles */
+            .video-row {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 20px;
+                justify-content: flex-start;
+                margin: 20px 0;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
+            }
+            .video-row::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+            .video-container {
+                flex: 0 0 auto;
+                width: 350px;
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                position: relative;
+                z-index: 1;
+            }
+            .video-container:hover {
+                transform: scale(1.3);
+                z-index: 2;
+            }
+            .video-container video {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                object-fit: contain;
+                cursor: pointer;
+            }
+
+            @media (max-width: 400px) {
+                .render_window {
+                    display: block;
+                    width: 90%;
+                    margin: 10px auto;
+                }
+            }
+            @media (max-width: 700px) {
+                .side-image {
+                    display: block;
+                    width: 80%;
+                    margin: 10px auto;
+                }
+                .side-text {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topnav" id="homepage">
+            <div>
+                <a href="#homepage" ><strong>OctoNet</strong></a>
+                <a href="#introduction" >Introduction</a>
+                <a href="#overview" >Overview</a>
+                <a href="#videos" >Videos</a>
+                <a href="#activities" >Activities</a>
+            </div>
+        </div>
+        <div class="section">
+            <h1 class="project-title">
+                <strong>OctoNet</strong>: A Large-Scale Multi-Modal Dataset for Human Activity Understanding Grounded in Motion-Captured 3D Pose Labels
+            </h1>
+            <div class="authors">
+                <a href="#">Dongsheng Yuan</a>
+                <a href="https://zhang-xie.github.io/">Xie Zhang</a>
+                <a href="https://houwayne.github.io/">Weiying Hou</a>
+                <a href="https://research.ethanlyu.top/">Sheng Lyu</a>
+                <a href="https://lucayu.me/">Luca Jiang-Tao Yu</a>
+                <a href="https://yuyueminaustin.github.io/">Yuemin Yu</a>
+                <a href="https://scholar.google.com/citations?user=usRnJPMAAAAJ&hl=en&oi=sra">Chengxiao Li</a>
+                <a href="https://cswu.me/">Chenshu Wu</a>
+            </div>
+
+            <div class="affiliations">
+                <span>School of Computing and Data Science, The University of Hong Kong</span>
+            </div>
+
+            <div class="project-icons">
+                <a href="#">
+                    <i class="ai ai-google-scholar"></i> <br/>
+                Paper
+                </a>
+
+                <a href="https://huggingface.co/datasets/hku-aiot/OctoNet">
+                    <i class="ai ai-archive"></i> <br/>
+                Dataset
+                </a>
+
+                <a href="https://github.com/aiot-lab/OctoNet">
+                    <i class="fa fa-github"></i> <br/>
+                    GitHub
+                </a>
+
+            </div>
+
+            <div id="introduction" class="teaser-image">
+                <p class="caption">
+                    We introduce OctoNet, a large-scale, multi-modal, multi-view human activity dataset designed to advance human activity understanding and multi-modal learning. OctoNet comprises 13 heterogeneous modalities (including RGB, depth, thermal cameras, infrared arrays, audio, millimeter-wave radar, WiFi, IMU, and more) recorded from 41 participants under multi-view sensor setups, yielding over 67.72M synchronized frames. The data encompass 62 daily activities spanning structured routines, freestyle behaviors, human-environment interaction, healthcare tasks, etc. Critically, all modalities are annotated by high-fidelity 3D pose labels captured via a professional motion-capture system, enabling precise alignment and rich supervision across sensors and views. OctoNet's breadth and annotation richness enable a wider range of learning tasks such as action recognition, 3D pose estimation, multi-modal fusion, cross-modal supervision, and sensor foundation models. OctoNet is one of the most comprehensive datasets of its kind, offering a unique testbed for developing and benchmarking generalizable, robust models for human-centric perceptual AI.
+                </p>
+            </div>
+
+            <div id="overview" class="section-title">Dataset Overview</div>
+            <div class="content">
+                <img src="static/images/overview.png" alt="Dataset Overview" style="width:90%;">
+                <p class="caption">
+                    Overview of sensing modalities in OctoNet. The system integrates wearable sensors
+                    (marked with*) and non-contact modalities spanning the frequency spectrum, unified through
+                    high-fidelity 3D poses from a professional motion capture system. These poses provide an explicit
+                    representation to align and correlate multimodal data streams.
+                </p>
+            </div>
+
+
+            <div id="videos" class="section-title">Video Demos</div>
+            <div class="content">
+                <div class="video-row" id="videoRow">
+                    <div class="video-container">
+                        <video loop autoplay muted playsinline>
+                            <source src="static/videos/ira_rgb_falldown_user_5_1 - Trim.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-container">
+                        <video loop autoplay muted playsinline>
+                            <source src="static/videos/seek_rgb_drawzigzag_user_7.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-container">
+                        <video loop autoplay muted playsinline>
+                            <source src="static/videos/depth_rgb_3nodes_dance_user_1 - Trim.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-container">
+                        <video loop autoplay muted playsinline>
+                            <source src="static/videos/uwb_rgb_dodge_user_8_1 - Trim.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-container">
+                        <video loop autoplay muted playsinline>
+                            <source src="static/videos/tof_rgb_jump_user_2 - Trim.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <div id="activities" class="section-title">62 Activities</div>
+            <div class="content">
+                <img src="static/images/figoutput.jpg" alt="Activities Sample" style="width:90%;">
+                <p class="caption">
+                    An illustration of the 62 distinct activities, which are further grouped into five subcategories reflecting different interaction contexts. Notes that we split spreading and pitching for visualization.
+                </p>
+            </div>
+        </div>
+        <div class="section-title"> </div>
+        <p align="center">Thanks to <a href="https://paschalidoud.github.io/">Despoina Paschalidou</a> for the website template.</p>
+    </body>
+<script>
+// Infinite scroll implementation with content loop
+(function() {
+    const row = document.getElementById('videoRow');
+    if (!row) return;
+    
+    const scrollStep = 0.7; // Pixels to scroll per frame
+    let isScrollPaused = false;
+    let animationFrameId = null;
+
+    // Get all video containers
+    const containers = Array.from(row.getElementsByClassName('video-container'));
+    const containerWidth = containers[0].offsetWidth + 20; // Including gap
+    const totalWidth = containerWidth * containers.length;
+
+    // Main scroll loop with content loop
+    function scrollLoop() {
+        if (!isScrollPaused) {
+            row.scrollLeft += scrollStep;
+            
+            // If we've scrolled past one container width
+            if (row.scrollLeft >= containerWidth) {
+                // Move first container to the end
+                const firstContainer = containers.shift();
+                containers.push(firstContainer);
+                row.appendChild(firstContainer);
+                
+                // Adjust scroll position to maintain continuity
+                row.scrollLeft -= containerWidth;
+            }
+        }
+        animationFrameId = requestAnimationFrame(scrollLoop);
+    }
+
+    // Handle hover events for each video container
+    containers.forEach(container => {
+        const video = container.querySelector('video');
+        
+        container.addEventListener('mouseenter', () => {
+            isScrollPaused = true;
+            video.play();
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isScrollPaused = false;
+        });
+    });
+
+    // Start scrolling when page loads
+    window.addEventListener('load', scrollLoop);
+
+    // Clean up on page unload
+    window.addEventListener('unload', () => {
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+    });
+})();
+</script>
+</html>
