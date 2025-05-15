@@ -3,7 +3,7 @@
   <a href="https://aiot-lab.github.io/OctoNet/" target="_blank">
     <img src="https://img.shields.io/badge/Project%20Page-Visit-blue" alt="Project Page" style="margin-right:10px;">
   </a>
-  <a href="https://github.com/hku-aiot/OctoNet" target="_blank">
+  <a href="https://github.com/aiot-lab/OctoNet" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-Visit-lightgrey" alt="GitHub" style="margin-right:10px;">
   </a>
   <a href="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License" style="margin-right:10px;">
