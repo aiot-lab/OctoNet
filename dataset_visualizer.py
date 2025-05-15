@@ -374,7 +374,7 @@ def visualize_seekthermal_and_rgb_mosaic_batch_discard_excess(
         print(f"[visualize_seekthermal_and_rgb_mosaic_batch_discard_excess] Saved => {out_path}")
 
 @visualizer_decorator
-def dump_seekthermal_frames_as_png(batch, output_dir="validation_seekthermal"):
+def dump_seekthermal_frames_as_png(batch, output_dir="validation_seekthermal", fps_out=None):
     """
     Save each SeekThermal frame as a separate .png (with a color map)
     so you can manually inspect how the frames progress over time.
@@ -2867,11 +2867,6 @@ if __name__ == "__main__":
             output_dir="imu_time_features_plus_rgb",
             fps_out=10.0
         )
-        # visualize_imu_time_features_single_plot_zscore(
-        #     batch,
-        #     output_dir="imu_time_features_plus_rgb",
-        #     fps_out=10.0
-        # )
         visualize_uwb_and_rgb_in_same_row_with_box(
             batch,
             output_dir="uwb_rgb_same_row_with_box",

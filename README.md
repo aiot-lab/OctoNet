@@ -16,6 +16,12 @@ This toolbox contains the visualization code for the OctoNet network. It helps y
 > **Note:** It is recommended to run the code in Python Jupyter Notebook `demo.ipynb`.
 
 ## Dataset Download
+Download the dataset from [huggingface](https://huggingface.co/datasets/hku-aiot/OctoNet) using the provided script.
+
+```bash
+bash download_octonet.sh
+```
+
 **The following is the directory structure of the dataset:**
 ```bash
 ./dataset
@@ -73,7 +79,7 @@ config = {
         'handshake', 'hug', 'pushsomeone', 'kicksomeone', 'punchsomeone', 'conversation', 'gym', 'freestyle'],  # Specify which activities to filter
     'node_id': [1, 2, 3, 4, 5], 
     'segmentation_flag': True, # whether to include segmentation in the dataset
-    'modality': [ 'mmWave', 'IRA', 'uwb', 'ToF', 'polar', 'wifi', 'depthCamera', 'seekThermal','acoustic', 'imu', 'vayyar'] # depthCamera is RGB-D camera
+    'modality': [ 'mmWave', 'IRA', 'uwb', 'ToF', 'polar', 'wifi', 'depthCamera', 'seekThermal','acoustic', 'imu', 'vayyar', 'mocap'] # depthCamera is RGB-D camera
 }
 ```
 
@@ -84,9 +90,9 @@ config = {
     'activity_list': ['dance'],  # select activity 'dance'
     'node_id': [1, 2, 3, 4, 5],  # select all nodes
     'segmentation_flag': True, # data is segmented
-    'modality': [ 'mmWave', 'IRA', 'uwb', 'ToF', 'polar', 'wifi', 'depthCamera', 'seekThermal','acoustic', 'imu', 'vayyar'], # select all modalities
+    'modality': [ 'mmWave', 'IRA', 'uwb', 'ToF', 'polar', 'wifi', 'depthCamera', 'seekThermal','acoustic', 'imu', 'vayyar', 'mocap'], # select all modalities
     # 'modality': ['polar', 'depthCamera'], # select polar and depthCamera modalities
-    'mocap_downsample_num': 6 # downsample the mocap data to 6 frames per second
+    # 'mocap_downsample_num': 6 # downsample the mocap data to 6 frames per second
 }
 ```
 
@@ -96,10 +102,27 @@ config = {
 The visualization code is provided in `demo.ipynb`. It will generate figures and videos in the `vis_output` folder in the root directory.
 
 ```python
+# Sample configuration and usage
+dataset_path = "dataset"
+data_config = {
+    'user_list': [1],  # Specify which users to filter
+    'activity_list': ['dance'],  
+    'node_id': [1, 2, 3, 4, 5], 
+    'segmentation_flag': True,
+    'modality': [ 'mmWave', 'IRA', 'uwb', 'ToF', 'polar', 'wifi', 'depthCamera', 'seekThermal','acoustic', 'imu', 'vayyar', 'mocap'],
+    # 'modality': ['polar', 'depthCamera'],
+    # 'mocap_downsample_num': 6
+}
+
+# Get the DataLoader
+dataset = get_dataset(data_config, dataset_path)
 dataloader = get_dataloader(dataset, batch_size=1, shuffle=False, config=data_config)
 
 for batch in dataloader:
-    # dump_seekthermal_frames_as_png(batch, output_dir="validation_seekthermal")
+    dump_seekthermal_frames_as_png(
+        batch, 
+        output_dir="validation_seekthermal"
+    )
     visualize_seekthermal_and_rgb_mosaic_batch_discard_excess(
         batch,
         output_dir='seekthermal_rgb_mosaic_videos',
@@ -125,12 +148,11 @@ for batch in dataloader:
         batch,
         output_dir='mocap_rgb_mosaic_videos',
         fps_out=10)
-        visualize_tof_and_rgb_mosaic_batch_downsample_tof(
+    visualize_tof_and_rgb_mosaic_batch_downsample_tof(
         batch,
         output_dir='tof_rgb_mosaic_videos',
         fps_out=7.32
     )
-
     visualize_fmcw_and_rgb_mosaic_batch_raw_fixed_axes(
         batch,
         output_dir='fmcw_rgb_mosaic',
@@ -155,11 +177,6 @@ for batch in dataloader:
         output_dir="imu_time_features_plus_rgb",
         fps_out=10.0
     )
-    # visualize_imu_time_features_single_plot_zscore(
-    #     batch,
-    #     output_dir="imu_time_features_plus_rgb",
-    #     fps_out=10.0
-    # )
     visualize_uwb_and_rgb_in_same_row_with_box(
         batch,
         output_dir="uwb_rgb_same_row_with_box",
