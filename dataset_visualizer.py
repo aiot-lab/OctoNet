@@ -1047,95 +1047,95 @@ def visualize_4wifi_time_subcarrier_with_camera(
         a_min, a_max = all_vals.min(), all_vals.max()
         denom = (a_max - a_min) if a_max > a_min else 1e-6
 
-        # (C) Build the MP4 with up to wifi_nodes + 1 subplots (the last one is camera)
-        frames_list = []
-        out_name = f"wifi_4nodes_{act_str}_user_{user_id}_80Hz.mp4"
-        out_path = os.path.join(output_dir, out_name)
+        # # (C) Build the MP4 with up to wifi_nodes + 1 subplots (the last one is camera)
+        # frames_list = []
+        # out_name = f"wifi_4nodes_{act_str}_user_{user_id}_80Hz.mp4"
+        # out_path = os.path.join(output_dir, out_name)
 
-        # *** No suptitle => remove fig.suptitle(...) ***
+        # # *** No suptitle => remove fig.suptitle(...) ***
 
-        for i_cam in range(T_cam):
-            alpha = i_cam/(T_cam - 1) if T_cam > 1 else 0.0
+        # for i_cam in range(T_cam):
+        #     alpha = i_cam/(T_cam - 1) if T_cam > 1 else 0.0
 
-            fig, axes = plt.subplots(
-                1, wifi_nodes + 1,
-                figsize=(5 * (wifi_nodes + 1), 4)
-            )
-            # *** No suptitle, no subplot titles ***
+        #     fig, axes = plt.subplots(
+        #         1, wifi_nodes + 1,
+        #         figsize=(5 * (wifi_nodes + 1), 4)
+        #     )
+        #     # *** No suptitle, no subplot titles ***
 
-            for node_i in range(wifi_nodes):
-                ax_wifi = axes[node_i]
-                data_2d = node_plots[node_i]  # => (2*subc, t_len)
-                subc_count, t_len = data_2d.shape
+        #     for node_i in range(wifi_nodes):
+        #         ax_wifi = axes[node_i]
+        #         data_2d = node_plots[node_i]  # => (2*subc, t_len)
+        #         subc_count, t_len = data_2d.shape
 
-                # normalize
-                normed = (data_2d - a_min)/denom
+        #         # normalize
+        #         normed = (data_2d - a_min)/denom
 
-                # x-range => [0..(t_len-1)/wifi_sampling_rate], y => [0..subc_count]
-                x_right = (t_len - 1)/wifi_sampling_rate
-                extent = [0, x_right, 0, subc_count]
+        #         # x-range => [0..(t_len-1)/wifi_sampling_rate], y => [0..subc_count]
+        #         x_right = (t_len - 1)/wifi_sampling_rate
+        #         extent = [0, x_right, 0, subc_count]
 
-                im = ax_wifi.imshow(
-                    normed,
-                    aspect='auto',
-                    origin='lower',
-                    cmap='jet',
-                    extent=extent
-                )
+        #         im = ax_wifi.imshow(
+        #             normed,
+        #             aspect='auto',
+        #             origin='lower',
+        #             cmap='jet',
+        #             extent=extent
+        #         )
 
-                # step-based index => node_idx in [0..(t_len-1)]
-                if t_len > 1:
-                    node_float_idx = alpha*(t_len - 1)
-                    node_idx = floor(node_float_idx)
-                else:
-                    node_idx = 0
-                x_cur = node_idx / wifi_sampling_rate
-                ax_wifi.axvline(x=x_cur, color='white', linestyle='--', linewidth=1.5)
+        #         # step-based index => node_idx in [0..(t_len-1)]
+        #         if t_len > 1:
+        #             node_float_idx = alpha*(t_len - 1)
+        #             node_idx = floor(node_float_idx)
+        #         else:
+        #             node_idx = 0
+        #         x_cur = node_idx / wifi_sampling_rate
+        #         ax_wifi.axvline(x=x_cur, color='white', linestyle='--', linewidth=1.5)
 
-                # *** No subplot title => removed
-                # Axis labels with user-defined font size
-                ax_wifi.set_xlabel("Time (second)", fontsize=axis_label_fontsize)
-                ax_wifi.set_ylabel("Concatenated Subcarrier Index", fontsize=axis_label_fontsize)
+        #         # *** No subplot title => removed
+        #         # Axis labels with user-defined font size
+        #         ax_wifi.set_xlabel("Time (second)", fontsize=axis_label_fontsize)
+        #         ax_wifi.set_ylabel("Concatenated Subcarrier Index", fontsize=axis_label_fontsize)
 
-                # Tick label size
-                ax_wifi.tick_params(axis='both', which='major', labelsize=tick_label_fontsize)
+        #         # Tick label size
+        #         ax_wifi.tick_params(axis='both', which='major', labelsize=tick_label_fontsize)
 
-            # Right => camera
-            ax_cam = axes[wifi_nodes]
-            if i_cam < rgb_sample.shape[0]:
-                rgb_frame = rgb_sample[i_cam].cpu().numpy().astype(np.uint8)
-                ax_cam.imshow(rgb_frame)
-                ax_cam.axis('off')
-            else:
-                ax_cam.axis('off')
+        #     # Right => camera
+        #     ax_cam = axes[wifi_nodes]
+        #     if i_cam < rgb_sample.shape[0]:
+        #         rgb_frame = rgb_sample[i_cam].cpu().numpy().astype(np.uint8)
+        #         ax_cam.imshow(rgb_frame)
+        #         ax_cam.axis('off')
+        #     else:
+        #         ax_cam.axis('off')
 
-            # Use tight_layout to reduce whitespace
-            fig.tight_layout()
+        #     # Use tight_layout to reduce whitespace
+        #     fig.tight_layout()
 
-            fig.canvas.draw()
-            w_fig, h_fig = fig.canvas.get_width_height()
-            img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
-            img_argb = img_argb.reshape((h_fig, w_fig, 4))
+        #     fig.canvas.draw()
+        #     w_fig, h_fig = fig.canvas.get_width_height()
+        #     img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
+        #     img_argb = img_argb.reshape((h_fig, w_fig, 4))
 
-            # ARGB => RGBA
-            img_rgba = img_argb[..., [1,2,3,0]]
-            frames_list.append(img_rgba.copy())
-            plt.close(fig)
+        #     # ARGB => RGBA
+        #     img_rgba = img_argb[..., [1,2,3,0]]
+        #     frames_list.append(img_rgba.copy())
+        #     plt.close(fig)
 
-        # Save MP4
-        if not frames_list:
-            print(f"No frames for user={user_id}, activity={act_str}.")
-            continue
+        # # Save MP4
+        # if not frames_list:
+        #     print(f"No frames for user={user_id}, activity={act_str}.")
+        #     continue
 
-        height, width = frames_list[0].shape[:2]
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        out_writer = cv2.VideoWriter(out_path, fourcc, fps_out, (width, height))
+        # height, width = frames_list[0].shape[:2]
+        # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        # out_writer = cv2.VideoWriter(out_path, fourcc, fps_out, (width, height))
 
-        for frame_img in frames_list:
-            frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
-            out_writer.write(frame_bgr)
-        out_writer.release()
-        print(f"[visualize_4wifi_time_subcarrier_with_camera_80Hz] => {out_path}")
+        # for frame_img in frames_list:
+        #     frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
+        #     out_writer.write(frame_bgr)
+        # out_writer.release()
+        # print(f"[visualize_4wifi_time_subcarrier_with_camera_80Hz] => {out_path}")
 
         # (D) Optionally save a new PDF for Node2 (index=1) only
         if save_pdf:
@@ -1280,86 +1280,86 @@ def visualize_mocap_and_rgb_mosaic_batch_downsample_mocap(
         min_xyz = all_xyz.min(axis=0) - 50
         max_xyz = all_xyz.max(axis=0) + 50
 
-        # =============== Build MP4 ===============
-        frames_list = []
-        out_name = f"mocap_rgb_{act_str}_user_{user_id}.mp4"
-        out_path = os.path.join(output_dir, out_name)
+        # # =============== Build MP4 ===============
+        # frames_list = []
+        # out_name = f"mocap_rgb_{act_str}_user_{user_id}.mp4"
+        # out_path = os.path.join(output_dir, out_name)
 
-        T_cam_ = sample_rgb.shape[0]
-        for i_cam in range(T_cam_):
-            mocap_idx = get_mocap_index(i_cam, T_cam_, T_mocap)
-            skeleton_3d = sample_mocap[mocap_idx]  # shape [n_joints, 3]
+        # T_cam_ = sample_rgb.shape[0]
+        # for i_cam in range(T_cam_):
+        #     mocap_idx = get_mocap_index(i_cam, T_cam_, T_mocap)
+        #     skeleton_3d = sample_mocap[mocap_idx]  # shape [n_joints, 3]
 
-            fig = plt.figure(figsize=(10, 5))
-            # *** No suptitle => removed
+        #     fig = plt.figure(figsize=(10, 5))
+        #     # *** No suptitle => removed
 
-            ax_mocap = fig.add_subplot(1, 2, 1, projection='3d')
-            ax_rgb   = fig.add_subplot(1, 2, 2)
+        #     ax_mocap = fig.add_subplot(1, 2, 1, projection='3d')
+        #     ax_rgb   = fig.add_subplot(1, 2, 2)
 
-            # *** No subplot titles => removed ***
+        #     # *** No subplot titles => removed ***
 
-            # scatter joints
-            ax_mocap.scatter(
-                skeleton_3d[:, 0], skeleton_3d[:, 1], skeleton_3d[:, 2],
-                marker='o', s=25, c='blue'
-            )
+        #     # scatter joints
+        #     ax_mocap.scatter(
+        #         skeleton_3d[:, 0], skeleton_3d[:, 1], skeleton_3d[:, 2],
+        #         marker='o', s=25, c='blue'
+        #     )
 
-            # connect lines
-            n_conn = len(connections)
-            for c_idx, (start_idx, end_idx) in enumerate(connections):
-                xs = [skeleton_3d[start_idx, 0], skeleton_3d[end_idx, 0]]
-                ys = [skeleton_3d[start_idx, 1], skeleton_3d[end_idx, 1]]
-                zs = [skeleton_3d[start_idx, 2], skeleton_3d[end_idx, 2]]
-                c_val = colormap(c_idx / n_conn)
-                ax_mocap.plot(xs, ys, zs, lw=3, c=c_val)
+        #     # connect lines
+        #     n_conn = len(connections)
+        #     for c_idx, (start_idx, end_idx) in enumerate(connections):
+        #         xs = [skeleton_3d[start_idx, 0], skeleton_3d[end_idx, 0]]
+        #         ys = [skeleton_3d[start_idx, 1], skeleton_3d[end_idx, 1]]
+        #         zs = [skeleton_3d[start_idx, 2], skeleton_3d[end_idx, 2]]
+        #         c_val = colormap(c_idx / n_conn)
+        #         ax_mocap.plot(xs, ys, zs, lw=3, c=c_val)
 
-            # bounding box
-            ax_mocap.set_xlim(min_xyz[0], max_xyz[0])
-            ax_mocap.set_ylim(min_xyz[1], max_xyz[1])
-            ax_mocap.set_zlim(min_xyz[2], max_xyz[2])
+        #     # bounding box
+        #     ax_mocap.set_xlim(min_xyz[0], max_xyz[0])
+        #     ax_mocap.set_ylim(min_xyz[1], max_xyz[1])
+        #     ax_mocap.set_zlim(min_xyz[2], max_xyz[2])
 
-            # Axis labels with font size
-            ax_mocap.set_xlabel("X", fontsize=axis_label_fontsize, labelpad=20)
-            ax_mocap.set_ylabel("Y", fontsize=axis_label_fontsize, labelpad=20)
-            ax_mocap.set_zlabel("Z", fontsize=axis_label_fontsize, labelpad=20)
+        #     # Axis labels with font size
+        #     ax_mocap.set_xlabel("X", fontsize=axis_label_fontsize, labelpad=20)
+        #     ax_mocap.set_ylabel("Y", fontsize=axis_label_fontsize, labelpad=20)
+        #     ax_mocap.set_zlabel("Z", fontsize=axis_label_fontsize, labelpad=20)
 
-            # Tick label size
-            ax_mocap.tick_params(axis='x', which='major', labelsize=tick_label_fontsize)
-            ax_mocap.tick_params(axis='y', which='major', labelsize=tick_label_fontsize)
-            ax_mocap.tick_params(axis='z', which='major', labelsize=tick_label_fontsize)
+        #     # Tick label size
+        #     ax_mocap.tick_params(axis='x', which='major', labelsize=tick_label_fontsize)
+        #     ax_mocap.tick_params(axis='y', which='major', labelsize=tick_label_fontsize)
+        #     ax_mocap.tick_params(axis='z', which='major', labelsize=tick_label_fontsize)
 
-            # Let the default 3D background/panes remain
-            ax_mocap.view_init(elev=10, azim=90)  # optional viewpoint
+        #     # Let the default 3D background/panes remain
+        #     ax_mocap.view_init(elev=10, azim=90)  # optional viewpoint
 
-            # camera
-            if i_cam < T_cam_:
-                rgb_frame = sample_rgb[i_cam].cpu().numpy().astype(np.uint8)
-                ax_rgb.imshow(rgb_frame)
-                ax_rgb.axis('off')
-            else:
-                ax_rgb.axis('off')
+        #     # camera
+        #     if i_cam < T_cam_:
+        #         rgb_frame = sample_rgb[i_cam].cpu().numpy().astype(np.uint8)
+        #         ax_rgb.imshow(rgb_frame)
+        #         ax_rgb.axis('off')
+        #     else:
+        #         ax_rgb.axis('off')
 
-            fig.canvas.draw()
-            w_fig, h_fig = fig.canvas.get_width_height()
-            img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
-            img_argb = img_argb.reshape((h_fig, w_fig, 4))
-            img_rgba = img_argb[..., [1,2,3,0]]  # ARGB => RGBA
+        #     fig.canvas.draw()
+        #     w_fig, h_fig = fig.canvas.get_width_height()
+        #     img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
+        #     img_argb = img_argb.reshape((h_fig, w_fig, 4))
+        #     img_rgba = img_argb[..., [1,2,3,0]]  # ARGB => RGBA
 
-            frames_list.append(img_rgba.copy())
-            plt.close(fig)
+        #     frames_list.append(img_rgba.copy())
+        #     plt.close(fig)
 
-        # Write frames => MP4
-        if frames_list:
-            height, width = frames_list[0].shape[:2]
-            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            out_writer = cv2.VideoWriter(out_path, fourcc, fps_out, (width, height))
-            for frame_img in frames_list:
-                frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
-                out_writer.write(frame_bgr)
-            out_writer.release()
-            print(f"[visualize_mocap_and_rgb_mosaic_batch_downsample_mocap] => {out_path}")
-        else:
-            print(f"No frames for user={user_id}, activity={act_str}.")
+        # # Write frames => MP4
+        # if frames_list:
+        #     height, width = frames_list[0].shape[:2]
+        #     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        #     out_writer = cv2.VideoWriter(out_path, fourcc, fps_out, (width, height))
+        #     for frame_img in frames_list:
+        #         frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
+        #         out_writer.write(frame_bgr)
+        #     out_writer.release()
+        #     print(f"[visualize_mocap_and_rgb_mosaic_batch_downsample_mocap] => {out_path}")
+        # else:
+        #     print(f"No frames for user={user_id}, activity={act_str}.")
 
         # =============== Save 20 PDF snapshots of skeleton only ===============
         if T_mocap > 0:
@@ -2061,88 +2061,88 @@ def visualize_imu_four_rows_no_zscore(
         # (D) Retrieve camera frames => shape [T_cam, H, W, 3]
         sample_rgb = rgb_frames[b_idx, 0]
 
-        # --------------- Build the MP4 ---------------
-        frames_list = []
-        out_mp4_name = f"imu_4rows_nozscore_{act_str}_user_{user_id}.mp4"
-        out_mp4_path = os.path.join(output_dir, out_mp4_name)
+        # # --------------- Build the MP4 ---------------
+        # frames_list = []
+        # out_mp4_name = f"imu_4rows_nozscore_{act_str}_user_{user_id}.mp4"
+        # out_mp4_path = os.path.join(output_dir, out_mp4_name)
 
-        for i_cam in range(T_cam):
-            fig = plt.figure(figsize=(12, 8))
-            gs  = GridSpec(nrows=4, ncols=2, width_ratios=[4, 3], figure=fig)
+        # for i_cam in range(T_cam):
+        #     fig = plt.figure(figsize=(12, 8))
+        #     gs  = GridSpec(nrows=4, ncols=2, width_ratios=[4, 3], figure=fig)
 
-            # Left side => 4 subplots stacked vertically
-            ax_imu = []
-            for row_idx in range(4):
-                ax = fig.add_subplot(gs[row_idx, 0])
-                ax_imu.append(ax)
+        #     # Left side => 4 subplots stacked vertically
+        #     ax_imu = []
+        #     for row_idx in range(4):
+        #         ax = fig.add_subplot(gs[row_idx, 0])
+        #         ax_imu.append(ax)
 
-            # Right side => camera spanning all 4 rows
-            ax_cam = fig.add_subplot(gs[:, 1])
+        #     # Right side => camera spanning all 4 rows
+        #     ax_cam = fig.add_subplot(gs[:, 1])
 
-            # *** No suptitle here ***  
+        #     # *** No suptitle here ***  
 
-            # ---- Plot the 4 IMU subplots ----
-            for row_idx, (indices_this, labels_this) in enumerate(zip(group_indices, group_labels)):
-                ax = ax_imu[row_idx]
-                y_min_plt, y_max_plt = group_y_lims[row_idx]
-                y_label_text = group_yaxis_names[row_idx]
+        #     # ---- Plot the 4 IMU subplots ----
+        #     for row_idx, (indices_this, labels_this) in enumerate(zip(group_indices, group_labels)):
+        #         ax = ax_imu[row_idx]
+        #         y_min_plt, y_max_plt = group_y_lims[row_idx]
+        #         y_label_text = group_yaxis_names[row_idx]
 
-                # Plot each feature line in this group
-                for feat_idx, feat_label in zip(indices_this, labels_this):
-                    y_vals = sample_imu_s0[:, feat_idx]
-                    ax.plot(time_axis, y_vals, label=feat_label, lw=1.5)
+        #         # Plot each feature line in this group
+        #         for feat_idx, feat_label in zip(indices_this, labels_this):
+        #             y_vals = sample_imu_s0[:, feat_idx]
+        #             ax.plot(time_axis, y_vals, label=feat_label, lw=1.5)
 
-                ax.set_xlim([0, (T_imu - 1)/imu_sampling_rate])
-                ax.set_ylim([y_min_plt, y_max_plt])
-                # *** Use axis_label_fontsize ***
-                ax.set_ylabel(y_label_text, fontsize=axis_label_fontsize)
+        #         ax.set_xlim([0, (T_imu - 1)/imu_sampling_rate])
+        #         ax.set_ylim([y_min_plt, y_max_plt])
+        #         # *** Use axis_label_fontsize ***
+        #         ax.set_ylabel(y_label_text, fontsize=axis_label_fontsize)
 
-                # *** Tick label size => tick_label_fontsize ***
-                ax.tick_params(axis='both', labelsize=tick_label_fontsize)
+        #         # *** Tick label size => tick_label_fontsize ***
+        #         ax.tick_params(axis='both', labelsize=tick_label_fontsize)
 
-                if row_idx == 3:  # bottom row => x-label
-                    ax.set_xlabel("Time (second)", fontsize=axis_label_fontsize)
-                else:
-                    ax.set_xticks([])
+        #         if row_idx == 3:  # bottom row => x-label
+        #             ax.set_xlabel("Time (second)", fontsize=axis_label_fontsize)
+        #         else:
+        #             ax.set_xticks([])
 
-                # Legend font size = optional; let's match tick_label_fontsize
-                ax.legend(fontsize=tick_label_fontsize, loc="upper right")
+        #         # Legend font size = optional; let's match tick_label_fontsize
+        #         ax.legend(fontsize=tick_label_fontsize, loc="upper right")
 
-                # *** No subplot title *** 
-                # ax.set_title(f"Group {row_idx+1}", fontsize=10)
+        #         # *** No subplot title *** 
+        #         # ax.set_title(f"Group {row_idx+1}", fontsize=10)
 
-            # ---- Camera subplot ----
-            if i_cam < sample_rgb.shape[0]:
-                rgb_frame = sample_rgb[i_cam].cpu().numpy().astype(np.uint8)
-                ax_cam.imshow(rgb_frame)
-                # *** No title *** 
-                # ax_cam.set_title("Camera", fontsize=10)
-                ax_cam.axis('off')
-            else:
-                ax_cam.axis('off')
+        #     # ---- Camera subplot ----
+        #     if i_cam < sample_rgb.shape[0]:
+        #         rgb_frame = sample_rgb[i_cam].cpu().numpy().astype(np.uint8)
+        #         ax_cam.imshow(rgb_frame)
+        #         # *** No title *** 
+        #         # ax_cam.set_title("Camera", fontsize=10)
+        #         ax_cam.axis('off')
+        #     else:
+        #         ax_cam.axis('off')
 
-            # Convert figure => RGBA
-            fig.canvas.draw()
-            w_fig, h_fig = fig.canvas.get_width_height()
-            img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
-            img_argb = img_argb.reshape((h_fig, w_fig, 4))
-            # ARGB => RGBA
-            img_rgba = img_argb[..., [1,2,3,0]]
-            frames_list.append(img_rgba.copy())
-            plt.close(fig)
+        #     # Convert figure => RGBA
+        #     fig.canvas.draw()
+        #     w_fig, h_fig = fig.canvas.get_width_height()
+        #     img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
+        #     img_argb = img_argb.reshape((h_fig, w_fig, 4))
+        #     # ARGB => RGBA
+        #     img_rgba = img_argb[..., [1,2,3,0]]
+        #     frames_list.append(img_rgba.copy())
+        #     plt.close(fig)
 
-        # Write out the .mp4
-        if frames_list:
-            height, width = frames_list[0].shape[:2]
-            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            writer = cv2.VideoWriter(out_mp4_path, fourcc, fps_out, (width, height))
-            for frame_img in frames_list:
-                frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
-                writer.write(frame_bgr)
-            writer.release()
-            print(f"[visualize_imu_four_rows_no_zscore] => MP4 saved: {out_mp4_path}")
-        else:
-            print(f"No frames for user={user_id}, activity={act_str}. (No video)")
+        # # Write out the .mp4
+        # if frames_list:
+        #     height, width = frames_list[0].shape[:2]
+        #     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        #     writer = cv2.VideoWriter(out_mp4_path, fourcc, fps_out, (width, height))
+        #     for frame_img in frames_list:
+        #         frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
+        #         writer.write(frame_bgr)
+        #     writer.release()
+        #     print(f"[visualize_imu_four_rows_no_zscore] => MP4 saved: {out_mp4_path}")
+        # else:
+        #     print(f"No frames for user={user_id}, activity={act_str}. (No video)")
 
         # --------------- Build the PDF (IMU-only) ---------------
         if save_pdf and T_imu > 0:
@@ -2621,7 +2621,7 @@ def visualize_polar_and_camera_batch(
     axis_label_fontsize=40,
     tick_label_fontsize=40,
     x_domain=(0, 5.5),   # e.g. from 0..5 seconds or indexes
-    y_domain=(88,94)  # e.g. from 80..100 BPM
+    y_domain=(80, 100)  # e.g. from 80..100 BPM
 ):
     """
     Simplified for one polar node only.
@@ -2677,65 +2677,65 @@ def visualize_polar_and_camera_batch(
         out_mp4_name = f"polar_hr_{act_str}_user_{user_id}.mp4"
         out_mp4_path = os.path.join(output_dir, out_mp4_name)
 
-        # ---------- Build MP4 frames ----------
-        for i_cam in range(T_cam):
-            fig, (ax_left, ax_right) = plt.subplots(1, 2, figsize=(12,5))
-            # No suptitle => removed
+        # # ---------- Build MP4 frames ----------
+        # for i_cam in range(T_cam):
+        #     fig, (ax_left, ax_right) = plt.subplots(1, 2, figsize=(12,5))
+        #     # No suptitle => removed
 
-            # Left subplot => static polar data
-            ax_left.scatter(
-                x_axis,
-                sample_polar,
-                marker='D',    # diamond
-                s=60,          # bigger
-                facecolors='white',
-                edgecolors='black',
-                linewidths=1.2
-            )
-            # No subplot title => removed
+        #     # Left subplot => static polar data
+        #     ax_left.scatter(
+        #         x_axis,
+        #         sample_polar,
+        #         marker='D',    # diamond
+        #         s=60,          # bigger
+        #         facecolors='white',
+        #         edgecolors='black',
+        #         linewidths=1.2
+        #     )
+        #     # No subplot title => removed
 
-            # Axis label + custom font size
-            ax_left.set_xlabel("Time (index)", fontsize=axis_label_fontsize)
-            ax_left.set_ylabel("Heart Rate (bpm)", fontsize=axis_label_fontsize)
-            ax_left.tick_params(axis='both', labelsize=tick_label_fontsize)
+        #     # Axis label + custom font size
+        #     ax_left.set_xlabel("Time (index)", fontsize=axis_label_fontsize)
+        #     ax_left.set_ylabel("Heart Rate (bpm)", fontsize=axis_label_fontsize)
+        #     ax_left.tick_params(axis='both', labelsize=tick_label_fontsize)
 
-            # Force domain
-            ax_left.set_xlim(x_domain)
-            ax_left.set_ylim(y_domain)
+        #     # Force domain
+        #     ax_left.set_xlim(x_domain)
+        #     ax_left.set_ylim(y_domain)
 
-            # Right subplot => camera
-            if i_cam < sample_rgb.shape[0]:
-                rgb_frame = sample_rgb[i_cam].cpu().numpy().astype(np.uint8)
-                ax_right.imshow(rgb_frame)
-                ax_right.axis('off')
-            else:
-                ax_right.axis('off')
+        #     # Right subplot => camera
+        #     if i_cam < sample_rgb.shape[0]:
+        #         rgb_frame = sample_rgb[i_cam].cpu().numpy().astype(np.uint8)
+        #         ax_right.imshow(rgb_frame)
+        #         ax_right.axis('off')
+        #     else:
+        #         ax_right.axis('off')
 
-            fig.tight_layout()
+        #     fig.tight_layout()
 
-            # Convert fig => RGBA
-            fig.canvas.draw()
-            w_fig, h_fig = fig.canvas.get_width_height()
-            img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
-            img_argb = img_argb.reshape((h_fig, w_fig, 4))
-            # ARGB => RGBA
-            img_rgba = img_argb[..., [1,2,3,0]]
-            frames_list.append(img_rgba.copy())
-            plt.close(fig)
+        #     # Convert fig => RGBA
+        #     fig.canvas.draw()
+        #     w_fig, h_fig = fig.canvas.get_width_height()
+        #     img_argb = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
+        #     img_argb = img_argb.reshape((h_fig, w_fig, 4))
+        #     # ARGB => RGBA
+        #     img_rgba = img_argb[..., [1,2,3,0]]
+        #     frames_list.append(img_rgba.copy())
+        #     plt.close(fig)
 
-        if not frames_list:
-            print(f"No frames for user={user_id}, activity={act_str}")
-            continue
+        # if not frames_list:
+        #     print(f"No frames for user={user_id}, activity={act_str}")
+        #     continue
 
-        # Write MP4
-        height, width = frames_list[0].shape[:2]
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        writer = cv2.VideoWriter(out_mp4_path, fourcc, fps_out, (width, height))
-        for frame_img in frames_list:
-            frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
-            writer.write(frame_bgr)
-        writer.release()
-        print(f"[visualize_polar_and_camera_batch] => MP4: {out_mp4_path}")
+        # # Write MP4
+        # height, width = frames_list[0].shape[:2]
+        # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        # writer = cv2.VideoWriter(out_mp4_path, fourcc, fps_out, (width, height))
+        # for frame_img in frames_list:
+        #     frame_bgr = cv2.cvtColor(frame_img, cv2.COLOR_RGBA2BGR)
+        #     writer.write(frame_bgr)
+        # writer.release()
+        # print(f"[visualize_polar_and_camera_batch] => MP4: {out_mp4_path}")
 
         # ---------- Optional PDF -----------
         if save_pdf and T_p > 0:
