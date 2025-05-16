@@ -34,8 +34,60 @@ bash download_octonet.sh
 ├── node_5                   # Data: Data related to multi-modal sensor node 5.
 ├── imu                      # Data: Inertial measurement unit data.
 ├── vayyar_pickle            # Data: vayyar mmWave radar data.
-└── cut_manual.csv           # Manually curated data cuts (called by the OctoNet.py script to segment activity samples).
+└── cut_manual.csv           # Manually curated data cuts.
 ```
+
+<details>
+<summary>📋Metadata of OctoNet Dataset</summary>
+Note: <br>
+1. Gender is denoted by male (M) and female (F). PA&F indicates that a subject performed both Programmed Aerobics and Freestyle. The asterisk (*) marks subjects who performed only Programmed Aerobics (no Freestyle). <br>
+2. For Exp ID, Scene 1: 1-99, Scene 2: 101-199, Scene 3: 201-299. <br>
+
+| User (Gender) | Exp ID                   | Scene 1: Activity IDs | Scene 1: PA&F | Scene 2: Activity IDs | Scene 2: PA&F | Scene 3: Activity IDs   | Scene 3: PA&F |
+|---------------|--------------------------|:---------------------:|:-------------:|:---------------------:|:-------------:|:-----------------------:|:-------------:|
+| 1 (M)         | 1, 11, 101, 201          | all 62                | ✓             | 1–23                  |               | 1–23, 57–62             | ✓*            |
+| 2 (M)         | 2, 12, 102, 112, 202     | all 62                | ✓             | 9–29                  | ✓             | 9–29                    |               |
+| 3 (M)         | 3, 13, 113, 213          | all 62                | ✓             |                       | ✓             |                         | ✓             |
+| 4 (F)         | 4, 14, 104, 114, 204     | all 62                | ✓             | 30–56                 | ✓             | 30–56                   |               |
+| 5 (M)         | 5, 15, 115, 215          | all 62                | ✓             |                       | ✓             |                         | ✓             |
+| 6 (F)         | 6, 16                    | all 62                | ✓             |                       |               |                         |               |
+| 7 (M)         | 7, 17, 117, 217          | all 62                | ✓             |                       | ✓             |                         | ✓             |
+| 8 (M)         | 8, 18, 108, 118          | all 62                | ✓             | 24–62                 | ✓             | 24–62                   |               |
+| 9 (M)         | 9                        | all 62                |               |                       |               |                         |               |
+| 10 (M)        | 10, 20, 120, 220         | all 62                | ✓             |                       | ✓             |                         | ✓             |
+| 11 (F)        | 21                       |                       | ✓             |                       |               |                         |               |
+| 12 (M)        | 22                       |                       | ✓             |                       |               |                         |               |
+| 13 (F)        | 23                       |                       | ✓             |                       |               |                         |               |
+| 14 (M)        | 24                       |                       | ✓             |                       |               |                         |               |
+| 15 (F)        | 25                       |                       | ✓             |                       |               |                         |               |
+| 16 (F)        | 26                       |                       | ✓             |                       |               |                         |               |
+| 17 (F)        | 27                       |                       | ✓             |                       |               |                         |               |
+| 18 (F)        | 28                       |                       | ✓             |                       |               |                         |               |
+| 19 (F)        | 29                       |                       | ✓             |                       |               |                         |               |
+| 20 (F)        | 30, 230                  |                       | ✓             |                       |               |                         | ✓             |
+| 21 (M)        | 31                       |                       | ✓             |                       |               |                         |               |
+| 22 (M)        | 32                       |                       | ✓             |                       |               |                         |               |
+| 23 (F)        | 33                       |                       | ✓             |                       |               |                         |               |
+| 24 (M)        | 34                       |                       | ✓             |                       |               |                         |               |
+| 25 (M)        | 35                       |                       | ✓             |                       |               |                         |               |
+| 26 (M)        | 36                       |                       | ✓             |                       |               |                         |               |
+| 27 (M)        | 37                       |                       | ✓             |                       |               |                         |               |
+| 28 (F)        | 38                       |                       | ✓             |                       |               |                         |               |
+| 29 (F)        | 39                       |                       | ✓             |                       |               |                         |               |
+| 30 (M)        | 40                       |                       | ✓             |                       |               |                         |               |
+| 31 (M)        | 41                       |                       | ✓             |                       |               |                         |               |
+| 32 (F)        | 42                       |                       | ✓             |                       |               |                         |               |
+| 33 (F)        | 43                       |                       | ✓             |                       |               |                         |               |
+| 34 (F)        | 44                       |                       | ✓             |                       |               |                         |               |
+| 35 (M)        | 45                       |                       | ✓             |                       |               |                         |               |
+| 36 (M)        | 46                       |                       | ✓             |                       |               |                         |               |
+| 37 (M)        | 47                       |                       | ✓             |                       |               |                         |               |
+| 38 (F)        | 48                       |                       | ✓             |                       |               |                         |               |
+| 39 (F)        | 49                       |                       | ✓             |                       |               |                         |               |
+| 40 (M)        | 111, 211                 |                       |               | 1–8                   | ✓             | 1–8                     | ✓             |
+| 41 (F)        | 121, 221                 |                       |               |                       | ✓             |                         | ✓             |
+</details>
+
 
 ## Environment Setup
 Create Anaconda environment `octonet` using the environment.yaml file.
@@ -67,7 +119,7 @@ def get_dataset(config, dataset_path="", mocap_downsample_num = None) -> Octonet
 A full version of the config is shown below:
 ```python
 config = {
-    'user_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 101, 102, 104, 108, 111, 112, 113, 114, 115, 117, 118, 120, 121, 201, 202, 204, 208, 211, 213, 215, 217, 220, 221, 230] # all subjects list
+    'exp_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 101, 102, 104, 108, 111, 112, 113, 114, 115, 117, 118, 120, 121, 201, 202, 204, 208, 211, 213, 215, 217, 220, 221, 230] # all subjects list
     'activity_list': ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack', 'thunmbup'
         'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
         'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
@@ -86,7 +138,7 @@ config = {
 To select a subset of the dataset, you can modify the config file. For example:
 ```python
 config = {
-    'user_list': [1],  # select user 1
+    'exp_list': [1],  # select user 1
     'activity_list': ['dance'],  # select activity 'dance'
     'node_id': [1, 2, 3, 4, 5],  # select all nodes
     'segmentation_flag': True, # data is segmented
@@ -105,7 +157,7 @@ The visualization code is provided in `demo.ipynb`. It will generate figures and
 # Sample configuration and usage
 dataset_path = "dataset"
 data_config = {
-    'user_list': [1],  # Specify which users to filter
+    'exp_list': [1],  # Specify which users to filter
     'activity_list': ['dance'],  
     'node_id': [1, 2, 3, 4, 5], 
     'segmentation_flag': True,

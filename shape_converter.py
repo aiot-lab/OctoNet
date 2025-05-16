@@ -79,7 +79,7 @@ class DataConverter:
         self.data_config = data_config
         self.modalities = data_config['modality']
         self.activity_list = data_config['activity_list']
-        # self.user_list = data_config['user_list']
+        # self.exp_list = data_config['exp_list']
         self.activity_id_mapping = {activity: i for i, activity in enumerate(self.activity_list)}
         self.id_activity_mapping = {i: activity for i, activity in enumerate(self.activity_list)}
         self.model_config = model_config    

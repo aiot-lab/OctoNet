@@ -2775,7 +2775,7 @@ def visualize_polar_and_camera_batch(
 
 if __name__ == "__main__":
     '''The following is the complete list of valid users, activities, node_ids, and modalities for the dataset.
-        'user_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 101, 102, 104, 108, 111, 112, 113, 114, 115, 117, 118, 120, 121, 201, 202, 204, 208, 211, 213, 215, 217, 220, 221, 230],  # Specify which users to filter
+        'exp_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 101, 102, 104, 108, 111, 112, 113, 114, 115, 117, 118, 120, 121, 201, 202, 204, 208, 211, 213, 215, 217, 220, 221, 230],  # Specify which users to filter
         'activity_list' = [
             'sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
             'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
@@ -2794,7 +2794,7 @@ if __name__ == "__main__":
     # Sample configuration and usage
     dataset_path = "dataset"
     data_config = {
-        'user_list': [5],  # Specify which users to filter
+        'exp_list': [5],  # Specify which users to filter
         'activity_list': ['dance'],  
         'node_id': [1], 
         'segmentation_flag': True,

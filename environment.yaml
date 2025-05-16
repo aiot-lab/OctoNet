@@ -1,6 +1,9 @@
-name: octonet
+name: octonet-2
 channels:
+  - pytorch
+  - conda-forge
   - defaults
+
 dependencies:
   - python==3.9.18
   - matplotlib

@@ -26,7 +26,7 @@ class DataSelector:
         self.metadata_df = metadata_df
         self.dataset_path = dataset_path
         # Extract parameters from config
-        self.selected_user_ids = config.get('user_list', [])
+        self.selected_user_ids = config.get('exp_list', [])
         self.selected_activities = config.get('activity_list', [])
         self.node_ids = config.get('node_id', [])
         self.modalities = config.get('modality', [])
