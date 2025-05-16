@@ -1,4 +1,4 @@
-name: octonet-2
+name: octonet
 channels:
   - pytorch
   - conda-forge

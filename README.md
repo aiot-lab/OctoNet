@@ -94,7 +94,7 @@ Note: <br>
 
 
 ## Environment Setup
-Create Anaconda environment `octonet` using the environment.yaml file.
+Create Anaconda environment `octonet` using the `environment.yaml` file and then install the pip packages using the `requirements.txt` file. You can also skip the conda part if you are using an existing environment.
 
 ```bash
 conda env create -f environment.yaml
