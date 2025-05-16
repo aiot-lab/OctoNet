@@ -1,0 +1,13 @@
+einops
+librosa
+matplotlib
+numpy
+pandas
+Pillow
+PyYAML
+PyYAML
+scipy
+timm
+torchsummary
+tqdm
+tensorboard

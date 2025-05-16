@@ -94,13 +94,14 @@ Create Anaconda environment `octonet` using the environment.yaml file.
 
 ```bash
 conda env create -f environment.yaml
+pip install -r requirements.txt
 # conda activate octonet
 ```
 
 Then, start the jupyter notebook `demo.ipynb` using octonet environment.
 
 ## Sample Data Selection
-In `dataset_loader.py`, we define function `get_dataset` to easily load the dataset using a config file (examplesee the following section).
+In `dataset_loader.py`, we define function `get_dataset` to easily load the dataset using a config file (example see the following section).
 
 ```python
 def get_dataset(config, dataset_path="", mocap_downsample_num = None) -> OctonetDataset:
@@ -119,7 +120,7 @@ def get_dataset(config, dataset_path="", mocap_downsample_num = None) -> Octonet
 A full version of the config is shown below:
 ```python
 config = {
-    'exp_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 101, 102, 104, 108, 111, 112, 113, 114, 115, 117, 118, 120, 121, 201, 202, 204, 208, 211, 213, 215, 217, 220, 221, 230] # all subjects list
+    'exp_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 101, 102, 104, 108, 111, 112, 113, 114, 115, 117, 118, 120, 121, 201, 202, 204, 208, 211, 213, 215, 217, 220, 221, 230]
     'activity_list': ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack', 'thunmbup'
         'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
         'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
@@ -138,7 +139,7 @@ config = {
 To select a subset of the dataset, you can modify the config file. For example:
 ```python
 config = {
-    'exp_list': [1],  # select user 1
+    'exp_list': [1],  # select exp 1
     'activity_list': ['dance'],  # select activity 'dance'
     'node_id': [1, 2, 3, 4, 5],  # select all nodes
     'segmentation_flag': True, # data is segmented
@@ -157,7 +158,7 @@ The visualization code is provided in `demo.ipynb`. It will generate figures and
 # Sample configuration and usage
 dataset_path = "dataset"
 data_config = {
-    'exp_list': [1],  # Specify which users to filter
+    'exp_list': [1],  # Specify which experiments to filter
     'activity_list': ['dance'],  
     'node_id': [1, 2, 3, 4, 5], 
     'segmentation_flag': True,
