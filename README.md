@@ -40,8 +40,12 @@ bash download_octonet.sh
 <details>
 <summary>📋Metadata of OctoNet Dataset</summary>
 Note: <br>
-1. Gender is denoted by male (M) and female (F). PA&F indicates that a subject performed both Programmed Aerobics and Freestyle. The asterisk (*) marks subjects who performed only Programmed Aerobics (no Freestyle). <br>
-2. For Exp ID, Scene 1: 1-99, Scene 2: 101-199, Scene 3: 201-299. <br>
+<ul>
+<li>Gender is denoted by male (M) and female (F).</li>
+<li>PA&F indicates that a subject performed both Programmed Aerobics and Freestyle. The asterisk (*) marks subjects who performed only Programmed Aerobics (no Freestyle).</li>
+<li>For Scene&hArr;Exp ID mapping, Scene 1: 1-99, Scene 2: 101-199, Scene 3: 201-299.</li>
+</ul>
+<br>
 
 | User (Gender) | Exp ID                   | Scene 1: Activity IDs | Scene 1: PA&F | Scene 2: Activity IDs | Scene 2: PA&F | Scene 3: Activity IDs   | Scene 3: PA&F |
 |---------------|--------------------------|:---------------------:|:-------------:|:---------------------:|:-------------:|:-----------------------:|:-------------:|
