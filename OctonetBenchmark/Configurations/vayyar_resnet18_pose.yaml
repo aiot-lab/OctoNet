@@ -1,0 +1,89 @@
+task: 'vayyar_resnet18_pose'
+init_rand_seed: 41
+tqdm_disable: True
+tensorboard_folder: 'runs/vayyar/'        
+trained_model_folder: 'weights/vayyar/'
+model_save_enable: False
+log_folder: 'logs/vayyar/'    
+log_enable: True      
+
+num_epochs: 100
+early_stop: 100 # the number of epochs to stop the training if the validation loss does not decrease
+batch_size: 16
+num_workers: 16
+optimizer: 'AdamW' # 'AdamW', 'Lion' (https://github.com/lucidrains/lion-pytorch)
+lr: 0.001   # adamW: 0.001, Lion: 0.0004 (3-10x smaller than that for AdamW)
+weight_decay: 0.004 # adamW: 0.004, Lion: 0.01  (Lion is 3-10x larger than that for AdamW)
+max_norm: None
+criterion: 'mse' # 'cross_entropy', 'mse', label_smoothing
+resume_training: False # OR put the weights name for resume training: 'name_of_the_weights.pth'
+metric: 'mpjpe_3d' # 'accuracy', 'f1_score', 'precision', 'recall', 'mpjpe_2d', 'mpjpe_3d'
+dataset_path: "octonet"
+data_split: [0.7, 0.1, 0.2]
+format: null
+mocap_downsample_num: 6
+
+model_config:
+  model_name: 'resnet18'
+  model_input_shape: 'BCHW'  # BCHW, BLC, BTCHW # B: batch size, C: channel, H: height, W: width, T: time length, N: number of (WiFi CSI) links, F: frequency bins
+  num_classes: 360 # the number of classes in the dataset
+  in_channels: 2  # For wifi: num_nodes*time for BLC format (num_nodes*tx*rx*subcarriers=912)
+  target_shape:  # Should be a dictionary with shapes for each modality
+    IRA: [-1, 192, 24, 32]  # [batch_size, num_nodes(5)*time, H, W]
+    mmWave: [5, 25, 100, 4]
+    uwb: [-1, 1, 102, 1535] #(batch_size, num_nodes, time(17*6), CIR)
+    ToF: [-1, 6, 8, 8] # (batch_size, num_nodes*time, H, W) 
+    polar: [1, 8]
+    wifi: [-1, 8, 420, 114] # for BCHW (batch_size, num_nodes*tx*rx, time (average sampling rate is 74, appro 6 seconds for one sample ~420), subcarriers)
+    depthCamera: [3, 278, 480, 640]
+    seekThermal: [-1, 12, 240, 320]  # (batch_size, num_nodes*time, H, W)
+    acoustic: [2, 1, 128, 254]
+    imu: [-1, 1, 360, 221] # (batch_size, num_nodes, time(6*60=360), num_features*num_markers 13*17=221)
+    vayyar: [-1, 2, 400, 600] # (batch_size, 2*num_nodes, tx*rx, time*ADC (6*100))
+
+
+data_config:
+  user_list: [1,2,3,4,5,6,7, 111, 102, 104, 101, 108,
+              13,14,15,16,17,18,20,23,24,25,26,27,28,29,30,33,34,35,36,37,38,39,40,43,44,45,46,47,48,49,
+              112,113,114,115,117,118,120,121]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
+            'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
+            'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
+            'brushhair', 'bicepcurl', 'playphone', 'brushteeth', 'type', 'thumbup', 'thumbdown',
+            'makeoksign', 'makevictorysign', 'drawcircleclockwise', 'drawcirclecounterclockwise',
+            'stopsign', 'pullhandin', 'pushhandaway', 'handwave', 'sweep', 'clap', 'slide',
+            'drawzigzag', 'dodge', 'bowling', 'liftupahand', 'tap', 'spreadandpinch', 'drawtriangle',
+            'sneeze', 'cough', 'stagger', 'yawn', 'blownose', 'stretchoneself', 'touchface', 'gym', 'freestyle']
+  node_id: [1] 
+  segmentation_flag: True
+  modality: ['vayyar','mocap']
+
+cross_scene_data_config:
+  user_list: [201, 211, 202, 204, 208,
+              213,215,217,220,221,230]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
+            'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
+            'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
+            'brushhair', 'bicepcurl', 'playphone', 'brushteeth', 'type', 'thumbup', 'thumbdown',
+            'makeoksign', 'makevictorysign', 'drawcircleclockwise', 'drawcirclecounterclockwise',
+            'stopsign', 'pullhandin', 'pushhandaway', 'handwave', 'sweep', 'clap', 'slide',
+            'drawzigzag', 'dodge', 'bowling', 'liftupahand', 'tap', 'spreadandpinch', 'drawtriangle',
+            'sneeze', 'cough', 'stagger', 'yawn', 'blownose', 'stretchoneself', 'touchface', 'gym', 'freestyle']
+  node_id: [1]
+  segmentation_flag: True 
+  modality: ['vayyar','mocap']
+
+cross_user_data_config:
+  user_list: [8,9,10,
+              11,12,21,22,31,32,41,42]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
+            'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
+            'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
+            'brushhair', 'bicepcurl', 'playphone', 'brushteeth', 'type', 'thumbup', 'thumbdown',
+            'makeoksign', 'makevictorysign', 'drawcircleclockwise', 'drawcirclecounterclockwise',
+            'stopsign', 'pullhandin', 'pushhandaway', 'handwave', 'sweep', 'clap', 'slide',
+            'drawzigzag', 'dodge', 'bowling', 'liftupahand', 'tap', 'spreadandpinch', 'drawtriangle',
+            'sneeze', 'cough', 'stagger', 'yawn', 'blownose', 'stretchoneself', 'touchface', 'gym', 'freestyle']
+  node_id: [1]
+  segmentation_flag: True 
+  modality: ['vayyar','mocap']

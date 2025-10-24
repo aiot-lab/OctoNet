@@ -1,0 +1,107 @@
+task: 'ToF_rf_net_62'
+init_rand_seed: 41
+tqdm_disable: True
+tensorboard_folder: 'runs/ToF/'        
+trained_model_folder: 'weights/ToF/'
+model_save_enable: True
+log_folder: 'logs/ToF/'    
+log_enable: True      
+
+num_epochs: 100
+early_stop: 100 # the number of epochs to stop the training if the validation loss does not decrease
+batch_size: 32
+num_workers: 16
+optimizer: 'AdamW' # 'AdamW', 'Lion' (https://github.com/lucidrains/lion-pytorch)
+lr: 0.001   # adamW: 0.001, Lion: 0.0004 (3-10x smaller than that for AdamW)
+weight_decay: 0.004 # adamW: 0.004, Lion: 0.01  (Lion is 3-10x larger than that for AdamW)
+max_norm: None
+criterion: 'cross_entropy' # 'cross_entropy', 'mse', label_smoothing
+resume_training: False # OR put the weights name for resume training: 'name_of_the_weights.pth'
+metric: 'accuracy' # 'accuracy', 'f1_score', 'precision', 'recall', 'mpjpe_2d', 'mpjpe_3d'
+dataset_path: "octonet"
+data_split: [0.7, 0.1, 0.2]
+format: null
+
+model_config:
+  model_name: 'rf_net'
+  model_input_shape: 'BLC'  # BCHW, BLC, BTCHW # B: batch size, C: channel, H: height, W: width, T: time length, N: number of (WiFi CSI) links, F: frequency bins
+  num_classes: 62 # the number of classes in the dataset
+  in_channels: 1152  # For wifi: num_nodes*time for BLC format (num_nodes*tx*rx*subcarriers=912)
+  seq_length: 60 #for BLC
+  target_shape:  # Should be a dictionary with shapes for each modality
+    IRA: [-1, 192, 24, 32]  # [batch_size, num_nodes(5)*time, H, W]
+    mmWave: [5, 25, 100, 4]
+    uwb: [-1, 1, 102, 1535] #(batch_size, num_nodes, time(17*6), CIR)
+    ToF: [-1, 60, 1152] # # (batch_size, num_nodes*time*C 1*(1*60)*18, H, W) # BLC (batch_size, num_nodes*time, C*H*W)
+    polar: [1, 8]
+    wifi: [-1, 8, 420, 114] # for BCHW (batch_size, num_nodes*tx*rx, time (average sampling rate is 74, appro 6 seconds for one sample ~420), subcarriers)
+    depthCamera: [3, 278, 480, 640]
+    seekThermal: [-1, 12, 240, 320]  # (batch_size, num_nodes*time, H, W)
+    acoustic: [2, 1, 128, 254]
+    imu: [-1, 1, 360, 221] # (batch_size, num_nodes, time(6*60=360), num_features*num_markers 13*17=221)
+    vayyar: [1, 25, 400, 100]
+
+# data_config:
+#   user_list: [1,2,3,4,5,6,7, 111, 102, 104, 101, 108]  # Specify which users to filter
+#   activity_list: ['sit', 'walk', 'bow', 'drawzigzag', 'dance', 'drawcircleclockwise', 'falldown', 'jump', 'kicksomeone','pushsomeone'] 
+#   node_id: [4] 
+#   segmentation_flag: True
+#   modality: ['ToF']
+
+# cross_scene_data_config:
+#   user_list: [201, 211, 202, 204, 208]  # Specify which users to filter
+#   activity_list: ['sit', 'walk', 'bow', 'drawzigzag', 'dance', 'drawcircleclockwise', 'falldown', 'jump', 'kicksomeone','pushsomeone']  
+#   node_id: [4]
+#   segmentation_flag: True 
+#   modality: ['ToF']
+
+# cross_user_data_config:
+#   user_list: [8,9,10]  # Specify which users to filter
+#   activity_list: ['sit', 'walk', 'bow', 'drawzigzag', 'dance', 'drawcircleclockwise', 'falldown', 'jump', 'kicksomeone','pushsomeone'] 
+#   node_id: [4]
+#   segmentation_flag: True 
+#   modality: ['ToF']
+data_config:
+  user_list: [1,2,3,4,5,6,7, 111, 102, 104, 101, 108]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
+            'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
+            'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
+            'brushhair', 'bicepcurl', 'playphone', 'brushteeth', 'type', 'thumbup', 'thumbdown',
+            'makeoksign', 'makevictorysign', 'drawcircleclockwise', 'drawcirclecounterclockwise',
+            'stopsign', 'pullhandin', 'pushhandaway', 'handwave', 'sweep', 'clap', 'slide',
+            'drawzigzag', 'dodge', 'bowling', 'liftupahand', 'tap', 'spreadandpinch', 'drawtriangle',
+            'sneeze', 'cough', 'stagger', 'yawn', 'blownose', 'stretchoneself', 'touchface',
+            'handshake', 'hug', 'pushsomeone', 'kicksomeone', 'punchsomeone', 'conversation']  
+  node_id: [4] 
+  segmentation_flag: True
+  modality: ['ToF']
+
+cross_scene_data_config:
+  user_list: [201, 211, 202, 204, 208]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
+            'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
+            'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
+            'brushhair', 'bicepcurl', 'playphone', 'brushteeth', 'type', 'thumbup', 'thumbdown',
+            'makeoksign', 'makevictorysign', 'drawcircleclockwise', 'drawcirclecounterclockwise',
+            'stopsign', 'pullhandin', 'pushhandaway', 'handwave', 'sweep', 'clap', 'slide',
+            'drawzigzag', 'dodge', 'bowling', 'liftupahand', 'tap', 'spreadandpinch', 'drawtriangle',
+            'sneeze', 'cough', 'stagger', 'yawn', 'blownose', 'stretchoneself', 'touchface',
+            'handshake', 'hug', 'pushsomeone', 'kicksomeone', 'punchsomeone', 'conversation']  
+  node_id: [4]
+  segmentation_flag: True 
+  modality: ['ToF']
+
+cross_user_data_config:
+  user_list: [8,9,10]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'sleep', 'dance', 'jog', 'falldown', 'jump', 'jumpingjack',
+            'squat', 'lunge', 'turn', 'pushup', 'legraise', 'airdrum', 'boxing', 'shakehead',
+            'answerphone', 'eat', 'drink', 'wipeface', 'pickup', 'jumprope', 'moppingfloor',
+            'brushhair', 'bicepcurl', 'playphone', 'brushteeth', 'type', 'thumbup', 'thumbdown',
+            'makeoksign', 'makevictorysign', 'drawcircleclockwise', 'drawcirclecounterclockwise',
+            'stopsign', 'pullhandin', 'pushhandaway', 'handwave', 'sweep', 'clap', 'slide',
+            'drawzigzag', 'dodge', 'bowling', 'liftupahand', 'tap', 'spreadandpinch', 'drawtriangle',
+            'sneeze', 'cough', 'stagger', 'yawn', 'blownose', 'stretchoneself', 'touchface',
+            'handshake', 'hug', 'pushsomeone', 'kicksomeone', 'punchsomeone', 'conversation']   
+  node_id: [4]
+  segmentation_flag: True 
+  modality: ['ToF']

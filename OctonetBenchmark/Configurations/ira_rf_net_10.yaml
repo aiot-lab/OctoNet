@@ -1,0 +1,65 @@
+task: 'ira_rf_net_10'
+init_rand_seed: 41
+tqdm_disable: True
+tensorboard_folder: 'runs/ira/'        
+trained_model_folder: 'weights/ira/'
+model_save_enable: False
+log_folder: 'logs/ira/'    
+log_enable: True      
+
+num_epochs: 100
+early_stop: 100 # the number of epochs to stop the training if the validation loss does not decrease
+batch_size: 64
+num_workers: 16
+optimizer: 'AdamW' # 'AdamW', 'Lion' (https://github.com/lucidrains/lion-pytorch)
+lr: 0.001   # adamW: 0.001, Lion: 0.0004 (3-10x smaller than that for AdamW)
+weight_decay: 0.004 # adamW: 0.004, Lion: 0.01  (Lion is 3-10x larger than that for AdamW) (changed from 0.004 to 0.0001)
+max_norm: None
+criterion: 'cross_entropy' # 'cross_entropy', 'mse', label_smoothing
+resume_training: False # OR put the weights name for resume training: 'name_of_the_weights.pth'
+metric: 'accuracy' # 'accuracy', 'f1_score', 'precision', 'recall', 'mpjpe_2d', 'mpjpe_3d'
+dataset_path: "octonet"
+data_split: [0.7, 0.1, 0.2]
+format: null
+
+model_config:
+  model_name: 'rf_net'
+  model_input_shape: 'BLC'  # BCHW, BLC, BTCHW # B: batch size, C: channel, H: height, W: width, T: time length, N: number of (WiFi CSI) links, F: frequency bins
+  num_classes: 10 # the number of classes in the dataset
+  in_channels: 3840  #
+  seq_length: 42 #for BLC
+  target_shape:  # Should be a dictionary with shapes for each modality
+    IRA: [-1, 42, 3840]  # [batch_size, num_nodes(5)*time, H, W]  # BLC (batch_size, time, num_nodes*H*W)
+    mmWave: [5, 25, 100, 4]
+    uwb: [1, 158, 1600]
+    ToF: [1, 68, 8, 8]
+    polar: [1, 8]
+    wifi: [4, 708, 2, 114]
+    depthCamera: [3, 278, 480, 640]
+    seekThermal: [3, 72, 240, 320]
+    acoustic: [2, 1, 128, 254]
+    imu: [1, 487, 13, 17]
+    vayyar: [1, 25, 400, 100]
+
+
+
+data_config:
+  user_list: [1,2,3,4,5,6,7, 111, 102, 104, 101, 108]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'drawzigzag', 'dance', 'drawcircleclockwise', 'falldown', 'jump', 'kicksomeone','pushsomeone']
+  node_id: [1,2,3,4,5]
+  segmentation_flag: True
+  modality: ['IRA']
+
+cross_scene_data_config:
+  user_list: [201, 211, 202, 204, 208]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'drawzigzag', 'dance', 'drawcircleclockwise', 'falldown', 'jump', 'kicksomeone','pushsomeone']
+  node_id: [1,2,3,4,5]
+  segmentation_flag: True 
+  modality: ['IRA']
+
+cross_user_data_config:
+  user_list: [8,9,10]  # Specify which users to filter
+  activity_list: ['sit', 'walk', 'bow', 'drawzigzag', 'dance', 'drawcircleclockwise', 'falldown', 'jump', 'kicksomeone','pushsomeone']
+  node_id: [1,2,3,4,5]
+  segmentation_flag: True 
+  modality: ['IRA']
