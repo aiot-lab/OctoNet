@@ -1,0 +1,367 @@
+/* Scoped OctoNet selector widget */
+#octonet-selector {
+  --bg: #000;
+  --card: rgba(23, 23, 23, 0.72);
+  --card-inner: rgba(23, 23, 23, 0.5);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --accent: #fff;
+  --accent-hover: #e5e5e5;
+  --text: #fff;
+  --muted: #a3a3a3;
+  --success: #fff;
+  --danger: #ef4444;
+  --opt-off: rgba(23, 23, 23, 0.5);
+  color: var(--text);
+  line-height: 1.5;
+  font-family: Inter, system-ui, sans-serif;
+}
+#octonet-selector *, #octonet-selector *::before, #octonet-selector *::after { box-sizing: border-box; }
+#octonet-selector .container { max-width: 1280px; margin: 0 auto; }#octonet-selector h1 { font-size: 1.75rem; margin-bottom: 8px; letter-spacing: -0.04em; font-weight: 700; }#octonet-selector .subtitle { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }#octonet-selector .card {
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }#octonet-selector .card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }#octonet-selector .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 22px 0 20px;
+    border: 0;
+  }#octonet-selector .section-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }#octonet-selector .section-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }#octonet-selector .opt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }#octonet-selector .opt-grid.user { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }#octonet-selector .opt-grid.activity { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }#octonet-selector .opt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--opt-off);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    user-select: none;
+  }#octonet-selector .opt-btn:hover { border-color: var(--border-hover); background: #262626; color: var(--text); }#octonet-selector .opt-btn.selected {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+  }#octonet-selector .opt-btn.selected:hover { background: #e5e5e5; border-color: #e5e5e5; }#octonet-selector .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }#octonet-selector .btn-primary { background: #fff; color: #000; }#octonet-selector .btn-primary:hover { background: #e5e5e5; }#octonet-selector .btn-secondary { background: #171717; color: #fff; border-color: #262626; }#octonet-selector .btn-secondary:hover { background: #262626; }#octonet-selector .btn-sm { padding: 5px 10px; font-size: 0.8rem; }#octonet-selector .status { font-size: 0.9rem; color: var(--muted); }#octonet-selector .status.ok { color: var(--success); }#octonet-selector .status.err { color: var(--danger); }#octonet-selector pre#preview {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px;
+    overflow: auto;
+    font-size: 0.8rem;
+    flex: 1;
+    min-height: 0;
+    color: #e5e5e5;
+  }#octonet-selector .badge {
+    background: rgba(255,255,255,0.08);
+    color: var(--muted);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }#octonet-selector .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }#octonet-selector .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }#octonet-selector .tab:hover { color: var(--text); border-color: var(--border-hover); background: #171717; }#octonet-selector .tab.active {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+  }#octonet-selector .tab.active .badge {
+    background: rgba(0,0,0,0.12);
+    color: #171717;
+  }#octonet-selector .selection-body {
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+  }#octonet-selector .panel-stack {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }#octonet-selector .panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }#octonet-selector .panel.active {
+    opacity: 1;
+    pointer-events: auto;
+  }#octonet-selector .panel > .opt-grid {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    align-content: start;
+  }#octonet-selector .split-panel {
+    display: grid;
+    grid-template-columns: minmax(240px, 280px) 1fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }#octonet-selector .range-pane {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 16px;
+    background: var(--card-inner);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }#octonet-selector .range-pane h4 { font-size: 0.9rem; font-weight: 600; }#octonet-selector .range-value {
+    font-size: 1.35rem;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }#octonet-selector .range-value span { color: var(--muted); font-size: 0.9rem; font-weight: 400; }#octonet-selector .range-actions { display: flex; flex-wrap: wrap; gap: 8px; }#octonet-selector .options-pane {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 12px;
+    min-height: 0;
+    overflow-y: auto;
+    background: var(--card-inner);
+  }#octonet-selector .dual-range {
+    position: relative;
+    height: 28px;
+    margin: 8px 0 4px;
+  }#octonet-selector .dual-range-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 12px;
+    height: 6px;
+    border-radius: 999px;
+    background: #262626;
+  }#octonet-selector .dual-range-fill {
+    position: absolute;
+    top: 0;
+    height: 6px;
+    border-radius: 999px;
+    background: #fff;
+  }#octonet-selector .dual-range input[type="range"] {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 4px;
+    margin: 0;
+    appearance: none;
+    background: none;
+    pointer-events: none;
+    height: 20px;
+  }#octonet-selector .dual-range input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    pointer-events: auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #171717;
+    cursor: grab;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+  }#octonet-selector .dual-range input[type="range"]::-moz-range-thumb {
+    pointer-events: auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #171717;
+    cursor: grab;
+  }#octonet-selector .dual-range input[type="range"]::-webkit-slider-runnable-track {
+    background: transparent;
+    height: 6px;
+  }#octonet-selector .dual-range input[type="range"]::-moz-range-track {
+    background: transparent;
+    height: 6px;
+  }#octonet-selector .stats-section {
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+  }#octonet-selector .stats-section > h2 { flex-shrink: 0; }#octonet-selector .stats-layout {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.75fr) minmax(420px, 1.9fr) minmax(240px, 1fr);
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }#octonet-selector .stats-col {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 16px;
+    background: var(--card-inner);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }#octonet-selector .stats-col h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    flex-shrink: 0;
+  }#octonet-selector .stat-block { margin-bottom: 12px; }#octonet-selector .stat-label { font-size: 0.85rem; color: var(--muted); }#octonet-selector .stat-value {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--success);
+    font-variant-numeric: tabular-nums;
+    word-break: break-word;
+  }#octonet-selector .stat-sub { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }#octonet-selector .charts {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }#octonet-selector .chart-card h4 {
+    font-size: 0.75rem;
+    color: var(--text);
+    margin-bottom: 4px;
+    text-align: center;
+  }#octonet-selector .chart-svg { width: 100%; max-width: 108px; margin: 0 auto; display: block; overflow: visible; }#octonet-selector .legend {
+    margin-top: 4px;
+    max-height: 78px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }#octonet-selector .legend::-webkit-scrollbar { width: 8px; }#octonet-selector .legend::-webkit-scrollbar-track { background: #171717; border-radius: 999px; }#octonet-selector .legend::-webkit-scrollbar-thumb { background: #525252; border-radius: 999px; }#octonet-selector .legend-row {
+    display: grid;
+    grid-template-columns: 8px minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 6px;
+    margin-bottom: 4px;
+    cursor: pointer;
+  }#octonet-selector .swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }#octonet-selector .legend-text {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    min-width: 0;
+  }#octonet-selector .legend-name {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.25;
+  }#octonet-selector .legend-leader {
+    flex: 1 1 10px;
+    min-width: 8px;
+    border-bottom: 1px dotted rgba(255,255,255,0.35);
+    margin-bottom: 0.35em;
+  }#octonet-selector .legend-count {
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }#octonet-selector .chart-svg path, #octonet-selector .chart-svg circle.slice { cursor: pointer; }#octonet-selector .pie-tooltip {
+    position: fixed;
+    z-index: 40;
+    display: none;
+    pointer-events: none;
+    background: #171717;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 0.75rem;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    max-width: 220px;
+    white-space: pre-line;
+  }#octonet-selector .config-col { min-height: 0; }#octonet-selector .config-col .btn { flex-shrink: 0; margin-bottom: 10px; width: fit-content; }#octonet-selector .config-col pre { margin-bottom: 0; }#octonet-selector .empty-chart {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 24px 8px;
+  }@media (max-width: 1100px) {
+    .charts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }@media (max-width: 960px) {
+    .stats-layout, .split-panel {
+      grid-template-columns: 1fr;
+    }
+    .stats-layout { overflow: auto; }
+    .charts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .selection-body, .stats-section { height: auto; min-height: 320px; }
+    .panel-stack { min-height: 280px; }
+    .panel { position: relative; opacity: 0; height: 0; overflow: hidden; }
+    .panel.active { opacity: 1; height: auto; overflow: visible; }
+  }
+
+#octonet-selector .sel-kicker {
+  color: #60a5fa;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: block;
+}
+#octonet-selector .sel-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.04em;
+}
+@media (min-width: 768px) {
+  #octonet-selector .sel-title { font-size: 3rem; }
+}
+#octonet-selector .sel-lead {
+  font-size: 1.25rem;
+  color: #a3a3a3;
+  max-width: 42rem;
+  margin: 0 auto 3rem;
+}
