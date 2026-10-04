@@ -1,7 +1,7 @@
 const NODES = ["1", "2", "3", "4", "5", "mocap"];
 const MODALITIES = ["acoustic", "depthcam", "heartrate", "imu", "ira", "mmwave", "mocapcsv", "seekthermal", "ToF", "uwb", "wifi"];
 const SCENES = ["1", "2", "3"];
-const USERS = Array.from({ length: 42 }, (_, i) => String(i + 1));
+const USERS = Array.from({ length: 41 }, (_, i) => String(i + 1));
 const ACTIVITIES = [
   "airdrum", "answerphone", "bicepcurl", "blownose", "bow", "bowling", "boxing", "brushhair", "brushteeth",
   "clap", "conversation", "cough", "dance", "dodge", "drawcircleclockwise", "drawcirclecounterclockwise",
@@ -93,7 +93,7 @@ export function initOctonetSelector(root, dataUrl) {
     const right = ((end - min) / span) * 100;
     root.querySelector("#" + kind + "RangeFill").style.left = left + "%";
     root.querySelector("#" + kind + "RangeFill").style.width = (right - left) + "%";
-    const extra = kind === "user" ? " / 42" : " / " + ACTIVITIES.length;
+    const extra = kind === "user" ? " / " + USERS.length : " / " + ACTIVITIES.length;
     root.querySelector("#" + kind + "RangeLabel").innerHTML = `${start} – ${end} <span>${extra}</span>`;
   }
 
@@ -423,6 +423,9 @@ export function initOctonetSelector(root, dataUrl) {
   buildButtons("userGrid", USERS, "user", false);
   buildButtons("activityGrid", ACTIVITIES, "activity", true);
 
+  const userMax = USERS.length;
+  root.querySelector("#userStart").max = userMax;
+  root.querySelector("#userEnd").max = userMax;
   const actMax = ACTIVITIES.length;
   root.querySelector("#activityStart").max = actMax;
   root.querySelector("#activityEnd").max = actMax;

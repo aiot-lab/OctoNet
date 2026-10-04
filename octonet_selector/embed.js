@@ -56,11 +56,11 @@ const TEMPLATE = `
             <div class="split-panel">
               <div class="range-pane">
                 <h4>Range</h4>
-                <div class="range-value" id="userRangeLabel">1 – 10 <span>/ 42</span></div>
+                <div class="range-value" id="userRangeLabel">1 – 10 <span>/ 41</span></div>
                 <div class="dual-range">
                   <div class="dual-range-rail"><div class="dual-range-fill" id="userRangeFill"></div></div>
-                  <input type="range" id="userStart" min="1" max="42" value="1" aria-label="User range start">
-                  <input type="range" id="userEnd" min="1" max="42" value="10" aria-label="User range end">
+                  <input type="range" id="userStart" min="1" max="41" value="1" aria-label="User range start">
+                  <input type="range" id="userEnd" min="1" max="41" value="10" aria-label="User range end">
                 </div>
                 <div class="range-actions">
                   <button class="btn btn-secondary btn-sm" data-action="apply-user-range" data-select="true">Select range</button>
