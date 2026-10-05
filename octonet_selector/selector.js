@@ -1,5 +1,5 @@
 const NODES = ["1", "2", "3", "4", "5", "mocap"];
-const MODALITIES = ["acoustic", "depthcam", "heartrate", "imu", "ira", "mmwave", "mocapcsv", "seekthermal", "ToF", "uwb", "wifi"];
+const MODALITIES = ["acoustic", "depthcam", "heartrate", "imu", "ira", "mmwave", "mocapcsv", "seekthermal", "ToF", "uwb", "vayyarmmwave", "wifi"];
 const SCENES = ["1", "2", "3"];
 const USERS = Array.from({ length: 41 }, (_, i) => String(i + 1));
 const ACTIVITIES = [
@@ -9,7 +9,7 @@ const ACTIVITIES = [
   "jog", "jump", "jumpingjack", "jumprope", "kicksomeone", "legraise", "liftupahand", "lunge", "makeoksign",
   "makevictorysign", "moppingfloor", "pickup", "playphone", "pullhandin", "punchsomeone", "pushhandaway",
   "pushsomeone", "pushup", "shakehead", "sit", "sleep", "slide", "sneeze", "spreadandpinch", "squat", "stagger",
-  "stopsign", "strechoneself", "stretchoneself", "sweep", "tap", "thumbdown", "thumbup", "touchface", "turn",
+  "stopsign", "stretchoneself", "sweep", "tap", "thumbdown", "thumbup", "touchface", "turn",
   "type", "walk", "wipeface", "yawn"
 ];
 const ALL = { node: NODES, modality: MODALITIES, scene: SCENES, user: USERS, activity: ACTIVITIES };
@@ -379,6 +379,7 @@ export function initOctonetSelector(root, dataUrl) {
         if (isNaN(size) || !fname) { bad++; continue; }
         const parsed = parseFilename(fname);
         if (!parsed) { bad++; continue; }
+        if (parsed.activity === "strechoneself") continue;
         fileRecords.push({ size, ...parsed, raw: fname });
       }
       root.querySelector("#totalRecords").textContent = fileRecords.length.toLocaleString();
