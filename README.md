@@ -22,6 +22,29 @@
 <img src="figs/octonet_overview.png" alt="OctoNet Dataset Overview - Multi-modal sensor data visualization" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
+----
+> [!IMPORTANT]
+> **🚀 Major OctoNet Dataset Update — October 2026**
+>
+> We are excited to announce a major update to **OctoNet**, featuring improved dataset organization, more flexible data access, and comprehensive tutorials to make the dataset easier and more efficient to use!
+
+### ✨ What's New?
+
+- 🗂️ **Improved Data Organization:** A cleaner, more intuitive dataset structure organized by sensing modalities, participants, scenes, and other key attributes.
+- ⚡ **Streamlined Data Access:** Support for **streaming and selective downloads**, enabling flexible and efficient access to specific subsets of the dataset.
+- 📚 **Comprehensive Tutorials:** Step-by-step guides and practical demonstrations covering dataset access, organization, and usage.
+
+### 🔗 Resources & Getting Started
+
+All updated resources, including the **Hugging Face dataset page**, download instructions, and hands-on tutorials, are accessible through the links below:
+
+- 🌐 **[MuMoSe UbiComp 2026 Tutorial Website](https://aiot-lab.github.io/MuMoSe/)** — Tutorials, dataset resources, and links to the Hugging Face dataset.
+- 📺 **[OctoNet Video Playlist](https://www.youtube.com/watch?v=vRU-GZODnUU&list=PLWjpNsU_7nf0&index=4)** — Detailed video guides and walkthroughs.
+- ▶️ **[OctoNet Quick-Start Demo](https://youtu.be/brCBcWbKToA)** — A quick introduction to accessing and using the updated dataset.
+
+We hope these improvements make **OctoNet more accessible, flexible, and convenient** for the research community. Happy exploring! 🎉
+----
+
 ## 🚀 What's Inside This Toolbox
 
 <div align="center">
