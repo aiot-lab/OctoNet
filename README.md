@@ -43,6 +43,8 @@ All updated resources, including the **Hugging Face dataset page**, download ins
 - ▶️ **[OctoNet Quick-Start Demo](https://youtu.be/brCBcWbKToA)** — A quick introduction to accessing and using the updated dataset.
 
 We hope these improvements make **OctoNet more accessible, flexible, and convenient** for the research community. Happy exploring! 🎉
+
+💡 Note: The resources above are sufficient to get started with OctoNet. The rest of this repository provides additional technical details and benchmarking results for reference.
 ----
 
 ## 🚀 What's Inside This Toolbox
@@ -774,7 +776,13 @@ This project is licensed under the **GPL-3.0 License**. See the [LICENSE](./LICE
 
 If you find this work useful in your research, please cite our paper:
 
-> **📝 Citation:** Coming soon...
+@article{yuan2026octonet,
+  title={OctoNet: A large-scale multi-modal dataset for human activity understanding grounded in motion-captured 3D pose labels},
+  author={Yuan, Dongsheng and Zhang, Xie and Hou, Weiying and Lyu, Sheng and Yu, Yuemin and Yu, Luca Jiang-Tao and Li, Chengxiao and Wu, Chenshu},
+  journal={Advances in Neural Information Processing Systems},
+  volume={38},
+  year={2026}
+}
 
 <div align="center">
 
